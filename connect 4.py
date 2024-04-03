@@ -253,6 +253,9 @@ class Columns(ui.View):
 
 
 class Connect4(commands.Cog):
+    def __init__(self, bot: commands.Bot):
+        self.bot = bot
+    
     game = app_commands.Group(name = 'game', description = "Play games.")
 
     @app_commands.command(name = "connect4", description = "Play Connect 4 with another user. Have fun!")
