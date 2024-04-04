@@ -255,8 +255,6 @@ class Columns(ui.View):
 class Connect4(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-    
-    game = app_commands.Group(name = 'game', description = "Play games.")
 
     @app_commands.command(name = "connect4", description = "Play Connect 4 with another user. Have fun!")
     @commands.cooldown(1, 30, commands.BucketType.user) # Set a 30s cooldown after playing
@@ -282,7 +280,12 @@ class Connect4(commands.Cog):
             description = f"{opponent.mention}, do you want to play Connect 4 with {interaction.user.mention}?",
             color = discord.Color.dark_embed()
         )
-        await interaction.response.send_message(content = opponent.mention, embed = requestToPlay, view = view) # Ask to play
+        # Ask to play
+        await interaction.response.send_message(
+            content = opponent.mention,
+            embed = requestToPlay,
+            view = view
+        )
 
         view.message = await interaction.original_response() # Get the message sent above
         
@@ -296,7 +299,7 @@ class Connect4(commands.Cog):
         game_view = Columns(interaction.user, opponent) # Setup the game view
         
         # Setup the game message
-        board_message = await interaction.response.send_message(
+        await interaction.followup.send(
             content = game_view.players[game_view.player].mention,
             embed = discord.Embed(
                 title = "**Connect 4**",
@@ -304,6 +307,8 @@ class Connect4(commands.Cog):
                 color = discord.Color.blurple()
             ), view = game_view
         )
+
+        board_message = await interaction.original_response()
 
         await game_view.wait() # Play the game
 
