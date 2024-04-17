@@ -2,7 +2,7 @@
 @bot.command()
 async def sync(ctx):
     try:
-        synced = bot.tree.sync()
+        synced = await bot.tree.sync()
     except:
         error = traceback.format_exc()
         embed = discord.Embed(
@@ -17,12 +17,12 @@ async def sync(ctx):
     else:
         embed = discord.Embed(
             title = "Synced successfully!",
-            description = f"Synced {synced} commands successfully.",
+            description = f"Synced {len(synced)} commands successfully.",
             color = discord.Color.green()
         )
         embed.add_field(
             name = "Commands",
-            value = "\n".join([f"- {cmd.name}  {':white_check_mark:' if cmd in synced else ':x:'}" for cmd in bot.commands])
+            value = "\n".join([f"- {cmd.name}  :white_check_mark:" for cmd in synced])
         )
     finally:
         await ctx.reply(embed = embed)
