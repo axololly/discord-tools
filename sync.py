@@ -3,8 +3,8 @@
 async def sync(ctx):
     try:
         synced = await bot.tree.sync()
-    except:
-        error = traceback.format_exc()
+    except Exception as e:
+        error = traceback.format_exception(e)
         embed = discord.Embed(
             title = "An error occurred!",
             description = "Looks like something went wrong! Take a look below.",
