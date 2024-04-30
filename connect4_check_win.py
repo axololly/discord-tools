@@ -3,9 +3,9 @@ class Connect4_CheckWins:
     def is_game_over(self):
         rotated_board = [
             [
-                self.board[-1 - i][x] for i, _ in enumerate(self.board[0])
+                self.board[-1 - i][x] for i, _ in enumerate(self.board)
             ]
-            for x, _ in enumerate(self.board)
+            for x, _ in enumerate(self.board[0])
         ]
 
         for board in [self.board, rotated_board]:
